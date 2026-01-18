@@ -32,7 +32,7 @@ async  create(createUserDto: CreateUserDto) {
     return await this.usersRepository.update(id, updateUserDto);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.usersRepository.delete(id);
   }
 }

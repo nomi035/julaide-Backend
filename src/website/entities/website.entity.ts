@@ -2,6 +2,7 @@ import { BaseEntity } from '../../../base.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Analytics } from '../../analytics/entities/analytics.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum DeploymentPlatform {
     VERCEL = 'vercel',
@@ -16,9 +17,11 @@ export enum DeploymentPlatform {
 
 @Entity('websites')
 export class Website extends BaseEntity {
+    @ApiProperty({ example: 'example.com', description: 'The domain of the website' })
     @Column()
     domain: string;
 
+    @ApiProperty({ enum: DeploymentPlatform, default: DeploymentPlatform.OTHER })
     @Column({
         type: 'enum',
         enum: DeploymentPlatform,
@@ -26,9 +29,11 @@ export class Website extends BaseEntity {
     })
     deploymentPlatform: DeploymentPlatform;
 
+    @ApiProperty({ example: 'prop_123', description: 'Dark Visitor Property ID', required: false })
     @Column({ unique: true, nullable: true })
     darkVisitorPropertyId: string;
 
+    @ApiProperty({ example: 'pending', enum: ['pending', 'active', 'failed'] })
     @Column({ default: 'pending' })
     status: 'pending' | 'active' | 'failed';
 

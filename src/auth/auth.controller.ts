@@ -1,18 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { authSwaggerSchema } from './auth.swagger-schema';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
-@ApiTags('auth')
-@ApiBearerAuth()
 export class AuthController {
+  constructor(private readonly authService: AuthService) { }
 
-
-  constructor(private readonly authService: AuthService) {}
-  @ApiBody(authSwaggerSchema.loginBody)
   @Post('login')
+  @ApiOperation({ summary: 'User login' })
+  @ApiResponse({ status: 200, description: 'Login successful, returns JWT token.' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials.' })
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.login(createAuthDto);
   }
