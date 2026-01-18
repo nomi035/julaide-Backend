@@ -22,12 +22,12 @@ import { AnalyticsModule } from './analytics/analytics.module';
       // database: process.env.DB_NAME,
       // username: process.env.DB_USER,
       // password: process.env.DB_PASSWORD,
-      url: process.env.DB_URL,
+      url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
-      //  ssl: {
-      //  rejectUnauthorized: false,
-      //  },
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
     }),
     AuthModule,
   ],
