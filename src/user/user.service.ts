@@ -24,11 +24,11 @@ async  create(createUserDto: CreateUserDto) {
 
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.usersRepository.findOne({where:{id}});
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     return await this.usersRepository.update(id, updateUserDto);
   }
 

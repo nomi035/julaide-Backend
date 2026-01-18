@@ -5,27 +5,33 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { CoursesModule } from './courses/courses.module';
+import { WebsiteModule } from './website/website.module';
+import { AnalyticsModule } from './analytics/analytics.module';
+
 
 @Module({
-  imports: [UserModule,
+  imports: [
+    UserModule,
+    WebsiteModule,
+    AnalyticsModule,
     ConfigModule.forRoot(),
-     TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    database: process.env.DB_NAME,
-    username: process.env.DB_USER ,
-    password: process.env.DB_PASSWORD,
-    autoLoadEntities: true,
-    synchronize: true,
-     ssl: {
-     rejectUnauthorized: false,
-     },
-  }),
-     AuthModule,
-     CoursesModule,],
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      // host: process.env.DB_HOST,
+      // port: Number(process.env.DB_PORT),
+      // database: process.env.DB_NAME,
+      // username: process.env.DB_USER,
+      // password: process.env.DB_PASSWORD,
+      url: process.env.DB_URL,
+      autoLoadEntities: true,
+      synchronize: true,
+      //  ssl: {
+      //  rejectUnauthorized: false,
+      //  },
+    }),
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
