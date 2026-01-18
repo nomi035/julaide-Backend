@@ -2,32 +2,75 @@ import { BaseEntity } from '../../../base.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Analytics } from '../../analytics/entities/analytics.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export enum DeploymentPlatform {
-    VERCEL = 'vercel',
-    NETLIFY = 'netlify',
-    AWS = 'aws',
-    DIGITAL_OCEAN = 'digital_ocean',
-    HEROKU = 'heroku',
-    CLOUDFLARE = 'cloudflare',
-    SELF_HOSTED = 'self_hosted',
-    OTHER = 'other',
+export enum IntegrationPlatform {
+    WORDPRESS = 'WordPress',
+    CLOUDFLARE = 'Cloudflare',
+    SHOPIFY = 'Shopify',
+    AWS = 'AWS',
+}
+
+export enum IntegrationType {
+    BACKEND = 'Backend',
+    FRONTEND = 'Frontend',
+}
+
+export enum BackendOption {
+    NODEJS = 'Node.js',
+    PYTHON = 'Python',
+    PHP = 'PHP',
+    REST_API = 'REST API',
+}
+
+export enum IntegrationMethod {
+    SELF = 'Self',
+    SUPPORT = 'Support',
 }
 
 @Entity('websites')
 export class Website extends BaseEntity {
+    @ApiProperty({ example: 'My Website', description: 'The name of the website' })
+    @Column()
+    name: string;
+
     @ApiProperty({ example: 'example.com', description: 'The domain of the website' })
     @Column()
     domain: string;
 
-    @ApiProperty({ enum: DeploymentPlatform, default: DeploymentPlatform.OTHER })
+    @ApiProperty({ enum: IntegrationPlatform })
     @Column({
         type: 'enum',
-        enum: DeploymentPlatform,
-        default: DeploymentPlatform.OTHER,
+        enum: IntegrationPlatform,
     })
-    deploymentPlatform: DeploymentPlatform;
+    integrationPlatform: IntegrationPlatform;
+
+    @ApiProperty({ enum: IntegrationType })
+    @Column({
+        type: 'enum',
+        enum: IntegrationType,
+    })
+    integrationType: IntegrationType;
+
+    @ApiPropertyOptional({ enum: BackendOption })
+    @Column({
+        type: 'enum',
+        enum: BackendOption,
+        nullable: true,
+    })
+    backendOption: BackendOption;
+
+    @ApiPropertyOptional({ example: 'JavaScript tag' })
+    @Column({ nullable: true })
+    frontendOption: string;
+
+    @ApiProperty({ enum: IntegrationMethod, default: IntegrationMethod.SELF })
+    @Column({
+        type: 'enum',
+        enum: IntegrationMethod,
+        default: IntegrationMethod.SELF,
+    })
+    website_integration_method: IntegrationMethod;
 
     @ApiProperty({ example: 'prop_123', description: 'Dark Visitor Property ID', required: false })
     @Column({ unique: true, nullable: true })

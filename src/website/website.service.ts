@@ -40,8 +40,16 @@ export class WebsiteService {
         return await this.websiteRepository.save(website);
     }
 
+    async findByUser(userId: string): Promise<Website[]> {
+        return await this.websiteRepository.find({
+            where: { user: { id: userId } },
+            relations: ['analytics'],
+        });
+    }
+
     async remove(id: string): Promise<void> {
         const website = await this.findOne(id);
         await this.websiteRepository.remove(website);
     }
 }
+

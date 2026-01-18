@@ -25,9 +25,9 @@ import { AnalyticsModule } from './analytics/analytics.module';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
-      // ssl: {
-      //   rejectUnauthorized: false,
-      // },
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     AuthModule,
   ],

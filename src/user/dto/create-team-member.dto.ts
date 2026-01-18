@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
-export class InviteTeamMemberDto {
+export class CreateTeamMemberDto {
     @ApiProperty({ example: 'Jane Doe', description: 'Team member name' })
     @IsNotEmpty()
     @IsString()

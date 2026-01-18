@@ -2,7 +2,7 @@ import { Injectable, BadRequestException, NotFoundException, ConflictException }
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { OnboardClientDto } from './dto/onboard-client.dto';
-import { InviteTeamMemberDto } from './dto/invite-team-member.dto';
+import { CreateTeamMemberDto } from './dto/create-team-member.dto';
 import { AcceptInvitationDto } from './dto/accept-invitation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, Role } from './entities/user.entity';
@@ -81,21 +81,21 @@ export class UserService {
 
   // ==================== CLIENT: TEAM MANAGEMENT ====================
 
-  async inviteTeamMember(clientId: string, dto: InviteTeamMemberDto) {
-    console.log(`[inviteTeamMember] Attempting to find client with ID: ${clientId}`);
+  async createTeamMember(clientId: string, dto: CreateTeamMemberDto) {
+    console.log(`[createTeamMember] Attempting to find client with ID: ${clientId}`);
 
     // Check if client exists
     const client = await this.findOne(clientId);
 
-    console.log('[inviteTeamMember] Client found:', client);
+    console.log('[createTeamMember] Client found:', client);
 
     if (!client) {
-      console.error(`[inviteTeamMember] Error: Client not found for ID ${clientId}`);
+      console.error(`[createTeamMember] Error: Client not found for ID ${clientId}`);
       throw new NotFoundException('Client account not found');
     }
 
     if (client.role !== Role.CLIENT) {
-      console.error(`[inviteTeamMember] Error: User ${clientId} has role '${client.role}', expected '${Role.CLIENT}'`);
+      console.error(`[createTeamMember] Error: User ${clientId} has role '${client.role}', expected '${Role.CLIENT}'`);
       throw new NotFoundException(`User is not a client (Role: ${client.role})`);
     }
 

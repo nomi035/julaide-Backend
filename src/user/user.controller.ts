@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { OnboardClientDto } from './dto/onboard-client.dto';
-import { InviteTeamMemberDto } from './dto/invite-team-member.dto';
+import { CreateTeamMemberDto } from './dto/create-team-member.dto';
 import { AcceptInvitationDto } from './dto/accept-invitation.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard, RolesGuard } from 'src/auth/guard';
@@ -85,8 +85,8 @@ export class UserController {
   @ApiOperation({ summary: 'Create a team member with view-only access (Client only)' })
   @ApiResponse({ status: 201, description: 'Team member created successfully. They can now login.' })
   @ApiResponse({ status: 409, description: 'User with this email already exists.' })
-  async createTeamMember(@Request() req, @Body() dto: InviteTeamMemberDto) {
-    return this.userService.inviteTeamMember(req.user.userId, dto);
+  async createTeamMember(@Request() req, @Body() dto: CreateTeamMemberDto) {
+    return this.userService.createTeamMember(req.user.userId, dto);
   }
 
   @ApiBearerAuth()
